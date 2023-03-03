@@ -1,0 +1,44 @@
+import{_ as s,c as n,o as a,a as e}from"./app.bc6903c6.js";const m=JSON.parse('{"title":"vue项目中清除定时器（清除定时器不成功）","description":"","frontmatter":{},"headers":[{"level":2,"title":"如果有包裹：","slug":"如果有包裹","link":"#如果有包裹","children":[]},{"level":2,"title":"如果没有包裹","slug":"如果没有包裹","link":"#如果没有包裹","children":[]}],"relativePath":"zh/notes/blog文章/keep-alive中页面隐藏清除定时器.md","lastUpdated":1675867495000}'),l={name:"zh/notes/blog文章/keep-alive中页面隐藏清除定时器.md"},p=e(`<h1 id="vue项目中清除定时器-清除定时器不成功" tabindex="-1">vue项目中清除定时器（清除定时器不成功）</h1><p><strong>首先确认&lt; router-view &gt;外层是否有包裹了一层&lt; keep-alive &gt;</strong></p><h2 id="如果有包裹" tabindex="-1">如果有包裹：</h2><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">&lt;template&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">  &lt;div&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    &lt;keep-alive&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">      &lt;router-view /&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    &lt;/keep-alive&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">  &lt;/div&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">&lt;/template&gt;</span></span>
+<span class="line"><span style="color:#A6ACCD;">1234567</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>在data中：</p><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">data () {</span></span>
+<span class="line"><span style="color:#A6ACCD;">    return {</span></span>
+<span class="line"><span style="color:#A6ACCD;">      timer: null // 定时器</span></span>
+<span class="line"><span style="color:#A6ACCD;">    }</span></span>
+<span class="line"><span style="color:#A6ACCD;">  },</span></span>
+<span class="line"><span style="color:#A6ACCD;">12345</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>在activated中设置定时器：</p><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">activated () {</span></span>
+<span class="line"><span style="color:#A6ACCD;">    this.timer = setInterval(() =&gt; {</span></span>
+<span class="line"><span style="color:#A6ACCD;">      //  定时器中执行的代码</span></span>
+<span class="line"><span style="color:#A6ACCD;">    }, 30000)</span></span>
+<span class="line"><span style="color:#A6ACCD;">  },</span></span>
+<span class="line"><span style="color:#A6ACCD;">12345</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>在deactivated中清除定时器：</p><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">deactivated () {</span></span>
+<span class="line"><span style="color:#A6ACCD;">    // 页面关闭（路由跳转）时清除定时器</span></span>
+<span class="line"><span style="color:#A6ACCD;">    clearInterval(this.timer)</span></span>
+<span class="line"><span style="color:#A6ACCD;">    this.timer = null</span></span>
+<span class="line"><span style="color:#A6ACCD;">  },</span></span>
+<span class="line"><span style="color:#A6ACCD;">12345</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>&lt; keep-alive &gt;作用： &lt; keep-alive &gt; 可以使被包含的组件状态维持不变，即便是组件切换了，其内的状态依旧维持在内存之中。在下一次显示时，也不会重现渲染（有缓存的作用）。</p><p><strong>被包含在 &lt; keep-alive &gt; 中创建的组件，会多出两个生命周期的钩子: activated 与 deactivated</strong></p><p>activated 在组件被激活时调用，在组件第一次渲染时也会被调用，之后每次keep-alive激活时被调用。</p><p>deactivated 在组件被停用时调用。</p><blockquote><p>注意：只有组件被 keep-alive 包裹时，这两个生命周期才会被调用，如果作为正常组件使用，是不会被调用，以及在 2.1.0 版本之后，使用 exclude 排除之后，就算被包裹在 keep-alive中，这两个钩子依然不会被调用！另外在服务端渲染时此钩子也不会被调用的。</p></blockquote><h2 id="如果没有包裹" tabindex="-1">如果没有包裹</h2><p>在data中：</p><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">data () {</span></span>
+<span class="line"><span style="color:#A6ACCD;">    return {</span></span>
+<span class="line"><span style="color:#A6ACCD;">      timer: null // 定时器</span></span>
+<span class="line"><span style="color:#A6ACCD;">    }</span></span>
+<span class="line"><span style="color:#A6ACCD;">  },</span></span>
+<span class="line"><span style="color:#A6ACCD;">12345</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>在mounted中设置定时器：</p><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">mounted() {</span></span>
+<span class="line"><span style="color:#A6ACCD;">    this.timer = setInterval(() =&gt; {</span></span>
+<span class="line"><span style="color:#A6ACCD;">      //  定时器中执行的代码</span></span>
+<span class="line"><span style="color:#A6ACCD;">    }, 30000)</span></span>
+<span class="line"><span style="color:#A6ACCD;">  },</span></span>
+<span class="line"><span style="color:#A6ACCD;">12345</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>在beforeDestroy中清除定时器：</p><div class="language- line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">beforeDestroy() {</span></span>
+<span class="line"><span style="color:#A6ACCD;">    // 页面关闭（路由跳转）时清除定时器</span></span>
+<span class="line"><span style="color:#A6ACCD;">    clearInterval(this.timer)</span></span>
+<span class="line"><span style="color:#A6ACCD;">    this.timer = null</span></span>
+<span class="line"><span style="color:#A6ACCD;">  },</span></span>
+<span class="line"><span style="color:#A6ACCD;"></span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div>`,22),r=[p];function i(t,c,o,b,d,C){return a(),n("div",null,r)}const A=s(l,[["render",i]]);export{m as __pageData,A as default};
